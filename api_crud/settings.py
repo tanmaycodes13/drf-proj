@@ -89,11 +89,12 @@ WSGI_APPLICATION = "api_crud.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "tanmay",
-        "USER": "tanmay",
-        "PASSWORD": "postgres",
-        "PORT": "5432",
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('POSTGRES_DB','drf_proj'),
+        'USER': os.getenv('POSTGRES_USER','postgres'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD','secret1234'),
+        'HOST': os.getenv('HOST','localhost'),
+        'PORT': os.getenv('PORT','5432'),
     }
 }
 
