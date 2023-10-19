@@ -34,3 +34,4 @@ stack-data==0.6.3
 traitlets==5.11.2
 uWSGI==2.0.22
 wcwidth==0.2.8
+psycopg2

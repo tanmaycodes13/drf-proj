@@ -1,14 +1,22 @@
-FROM ubuntu:20.04
+FROM python:3.11.4-slim-buster
 
-RUN apt update && apt install -y python3 python3-pip
+WORKDIR /usr/src/app
 
-RUN mkdir code
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+ENV DJANGO_SUPERUSER_USERNAME admin
+ENV DJANGO_SUPER_USER_EMAIL info@test.com
+ENV DJANGO_SUPERUSER_PASSWORD secret1234
 
-WORKDIR /code
+RUN pip install --upgrade pip
+COPY ./requirements.txt /usr/src/app
+RUN apt-get update \
+    && apt-get -y install libpq-dev gcc 
 
-COPY . src/
+RUN pip install -r requirements.txt
 
-RUN pip3 install -r src/requirements.txt
+COPY . /usr/src/app
 
-CMD [ "uwsgi","--py-autoreload","1","--http",":8000" ,"--module" ,"api_crud.wsgi" ]
+EXPOSE 8000
+CMD ["./entrypoint.sh"]
 
